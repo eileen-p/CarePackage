@@ -19,9 +19,13 @@ export default function MyStack() {
         <Stack.Screen
           name= "Home"
           component= {HomeScreen}
-          options= {{title: 'Home'}}
+          options= {{title: 'Home', headerShown: false}}
         />
-        <Stack.Screen name= "Mood Page" component={MoodScreen}/>
+        <Stack.Screen 
+          name= "Mood Page" 
+          component={MoodScreen}
+          options = {{headerShown: false}}
+          />
       </Stack.Navigator>
     </NavigationContainer>
 
@@ -78,7 +82,7 @@ const HomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 115,
+    paddingHorizontal: 100,
     backgroundColor: '#fff',
     //alignItems: 'center',
     justifyContent: 'center',
@@ -92,5 +96,10 @@ const styles = StyleSheet.create({
 });
 
 const MoodScreen = ({navigation}) => {
-  return <Text>HI</Text>;
+  return (
+  <View style={styles.container}>
+    <Text>HI</Text>
+  </View>
+  );
+  
 };
