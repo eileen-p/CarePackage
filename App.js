@@ -51,7 +51,10 @@ const HomeScreen = ({navigation}) => {
         setSelected={(val) => setSelected(val)} 
         data={data} 
         save="value"
-        />
+      />
+    <Pressable >
+      <Text>I'm pressable!</Text>
+    </Pressable>
     </View>
     
   );
