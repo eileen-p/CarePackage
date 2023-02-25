@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 
 import { SelectList } from 'react-native-dropdown-select-list'
-
+// Used dropdown-select-list from https://www.npmjs.com/package/react-native-dropdown-select-list
 export default function App() {
 
   const [selected, setSelected] = React.useState("");
