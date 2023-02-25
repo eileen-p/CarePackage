@@ -53,7 +53,10 @@ const HomeScreen = ({navigation}) => {
         data={data} 
         boxStyles={{borderRadius: 9}}
         save="value"
-        />
+      />
+    <Pressable >
+      <Text>I'm pressable!</Text>
+    </Pressable>
     </View>
     
   );
