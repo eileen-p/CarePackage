@@ -49,7 +49,9 @@ const HomeScreen = ({navigation}) => {
       <StatusBar style="auto" />
       <SelectList 
         setSelected={(val) => setSelected(val)} 
+        font-family='cochin'
         data={data} 
+        boxStyles={{borderRadius: 9}}
         save="value"
         />
     </View>
