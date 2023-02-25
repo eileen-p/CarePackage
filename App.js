@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Alert, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import * as React from 'react';
+//import * as React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -12,7 +12,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 
 const Stack = createNativeStackNavigator();
 
-const MyStack = () => {
+export default function MyStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -26,11 +26,15 @@ const MyStack = () => {
     </NavigationContainer>
 
   );
+
 }
 //export default function App() {
 
+
+
+const HomeScreen = ({navigation}) => {
   const [selected, setSelected] = React.useState("");
-  //22
+  
   const data = [
       {key:'1', value:'Happy'},
       {key:'2', value:'Romantic'},
@@ -39,8 +43,6 @@ const MyStack = () => {
       {key:'5', value:'Hype'},
       {key:'6', value:'Studious'},
   ]
-
-const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
@@ -51,7 +53,9 @@ const HomeScreen = ({navigation}) => {
         save="value"
         />
     </View>
+    
   );
+  
 }
 
 
