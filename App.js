@@ -8,8 +8,8 @@ export default function App() {
   const [selected, setSelected] = React.useState("");
   
   const data = [
-      {key:'1', value:'Mobiles', disabled:true},
-      {key:'2', value:'Appliances'},
+      {key:'1', value:'Happy'},
+      {key:'2', value:'Romantic'},
       {key:'3', value:'Cameras'},
       {key:'4', value:'Computers', disabled:true},
       {key:'5', value:'Vegetables'},
@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.bigPurple}>What are you in the mood for?</Text>
+      <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
       <StatusBar style="auto" />
       <SelectList 
         setSelected={(val) => setSelected(val)} 
