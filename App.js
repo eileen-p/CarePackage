@@ -27,7 +27,7 @@ export default function App() {
         setSelected={(val) => setSelected(val)} 
         data={data} 
         save="value"
-    />
+      />
 
 
     </View>
