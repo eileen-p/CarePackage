@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>What are you in the mood for?</Text>
+      <Text style={styles.bigPurple}>What are you in the mood for?</Text>
       <StatusBar style="auto" />
       <SelectList 
         setSelected={(val) => setSelected(val)} 
@@ -40,4 +40,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  bigPurple: {
+    color: 'lavender',
+    fontWeight: 'bold',
+    fontSize: 30,
+  }
 });
