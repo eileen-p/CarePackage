@@ -11,11 +11,10 @@ export default function App() {
   const data = [
       {key:'1', value:'Happy'},
       {key:'2', value:'Romantic'},
-      {key:'3', value:'Cameras'},
-      {key:'4', value:'Computers', disabled:true},
-      {key:'5', value:'Vegetables'},
-      {key:'6', value:'Diary Products'},
-      {key:'7', value:'Drinks'},
+      {key:'3', value:'Sad'},
+      {key:'4', value:'Relaxed'},
+      {key:'5', value:'Hype'},
+      {key:'6', value:'Studious'},
   ]
 
 
