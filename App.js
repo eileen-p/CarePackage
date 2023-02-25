@@ -78,14 +78,16 @@ const HomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 115,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
   },
   bigPurple: {
     color: 'lavender',
     fontWeight: 'bold',
     fontSize: 30,
+    textAlign: 'center',
   },
 });
 
