@@ -19,9 +19,9 @@ export default function MyStack() {
         <Stack.Screen
           name= "Home"
           component= {HomeScreen}
-          options= {{title: 'Home'}}
+          options= {{title: 'Home', headerShown: false}}
         />
-        <Stack.Screen name= "Mood Page" component={MoodScreen}/>
+        <Stack.Screen name= "Mood Page" component={MoodScreen} options= {{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
 
@@ -92,5 +92,7 @@ const styles = StyleSheet.create({
 });
 
 const MoodScreen = ({navigation}) => {
-  return <Text>HI</Text>;
+  return (
+    <Text>HI</Text>;
+  )
 };
