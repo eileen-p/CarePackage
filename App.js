@@ -29,28 +29,25 @@ const MyStack = () => {
 }
 //export default function App() {
 
-const [selected, setSelected] = React.useState("");
-
-const data = [
-    {key:'1', value:'Happy'},
-    {key:'2', value:'Romantic'},
-    {key:'3', value:'Sad'},
-    {key:'4', value:'Relaxed'},
-    {key:'5', value:'Hype'},
-    {key:'6', value:'Studious'},
-]
+  const [selected, setSelected] = React.useState("");
+  //22
+  const data = [
+      {key:'1', value:'Happy'},
+      {key:'2', value:'Romantic'},
+      {key:'3', value:'Sad'},
+      {key:'4', value:'Relaxed'},
+      {key:'5', value:'Hype'},
+      {key:'6', value:'Studious'},
+  ]
 
 const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
-      <StatusBar style="auto"/>
-      <SelectList
-        setSelected={(val) => setSelected(val)}
-        fontFamily= 'lato'
-        data={data}
-        search={false}
-        boxStyles={{borderRadius: 9}}
+      <StatusBar style="auto" />
+      <SelectList 
+        setSelected={(val) => setSelected(val)} 
+        data={data} 
         save="value"
         />
     </View>
@@ -74,7 +71,7 @@ const styles = StyleSheet.create({
     color: 'lavender',
     fontWeight: 'bold',
     fontSize: 30,
-  }
+  },
 });
 
 const MoodScreen = ({navigation}) => {
