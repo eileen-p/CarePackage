@@ -23,7 +23,11 @@ export default function App() {
     <View style={styles.container}>
       <Text>What are you in the mood for?</Text>
       <StatusBar style="auto" />
-    
+      <SelectList 
+        setSelected={(val) => setSelected(val)} 
+        data={data} 
+        save="value"
+    />
 
     </View>
   );
