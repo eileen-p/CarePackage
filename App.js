@@ -7,7 +7,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 export default function App() {
 
   const [selected, setSelected] = React.useState("");
-  
+  //22
   const data = [
       {key:'1', value:'Happy'},
       {key:'2', value:'Romantic'},
