@@ -54,9 +54,15 @@ const HomeScreen = ({navigation}) => {
         boxStyles={{borderRadius: 9}}
         save="value"
       />
-    <Pressable >
+    {/* <Pressable >
       <Text>I'm pressable!</Text>
-    </Pressable>
+    </Pressable> */}
+      <Button
+        title="Get my mix!"
+        onPress={() =>
+          navigation.navigate('Mood Page')
+        }
+      />
     </View>
     
   );
