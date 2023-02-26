@@ -48,6 +48,10 @@ const hypeGenres = [
   { id: 53, name: 'Thriller' },
   {id: 10752, name: 'War' }
 ];
+const studiousGenre = [
+  { id: 99, name: 'Documentary' }, // questionable
+];
+
 
 
 
@@ -103,7 +107,7 @@ export default function MyStack() {
         // gestureEnabled: true,
         // gestureDirection: 'horizontal',
         // transitionSpec:{ 
-        //   open: TransitionSpecs.TransitionIOSSpec,
+        //   open: TransitionSpecs,
         //   close: TransitionSpecs.TransitionIOSSpec,
         // },
         // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
@@ -141,7 +145,7 @@ const HomeScreen = ({navigation}) => {
       {key:'3', value:'Sad'},
       {key:'4', value:'Relaxed'},
       {key:'5', value:'Hype'},
-      {key:'6', value:'Studious'},
+      {key:'6', value:'Studious'}
   ]
 
   const getTextColor = (selected) => {
@@ -178,13 +182,9 @@ const HomeScreen = ({navigation}) => {
         <Button
           title="Get my mix!"
           
-          onPress={async () => {
-            const apiData = await discoverMovies(hypeGenres)
-            const uniqueArray = Array.from(new Set(apiData.map(JSON.stringify))).map(JSON.parse);
-            rand = Math.floor(Math.random() * uniqueArray.length);
-            moodMoviePath = uniqueArray[rand].poster_path;
-            moodMovieName = uniqueArray[rand].original_title;
-            console.log(moodMovieName, moodMoviePath);
+          onPress={() => {
+            
+            
             navigation.navigate('Mood Page', {paramKey: selected})}
           }
 
@@ -418,8 +418,55 @@ const MoodScreen = ({route, navigation}) => {
       {ifElse(paramKey)}
       <Button
         title="Show my movie!"
-        onPress={() =>
-          navigation.navigate('Movie Page', {paramKey2: paramKey})
+        onPress={async () => {
+            apiData=[]; //= await discoverMovies(hypeGenres)
+              if (paramKey === 'Happy') {apiData = await discoverMovies(happyGenres)}
+              else if(paramKey === 'Sad') {apiData = await discoverMovies(sadGenres)}
+              else if(paramKey === 'Relaxed') {apiData = await discoverMovies(relaxedGenres)}
+              else if(paramKey === 'Romantic') {apiData = await discoverMovies(romanticGenres)}
+              else if(paramKey === 'Hype') {apiData = await discoverMovies(hypeGenres)}
+              else if(paramKey=== "Studious") { apiData =[]}
+              
+             //(paramKey) => {
+              // if (paramKey === 'Happy') {discoverMovies(happyGenres)}
+              // else if(paramKey === 'Sad') {discoverMovies(sadGenres)}
+              // else if(paramKey === 'Relaxed') {discoverMovies(relaxedGenres)}
+              // else if(paramKey === 'Romantic') {discoverMovies(romanticGenres)}
+              // else if(paramKey === 'Hype') {discoverMovies(hypeGenres)}
+              // else if(paramKey === 'Studious') {[]}
+              //discoverMovies(hypeGenres);
+
+            
+            const uniqueArray = Array.from(new Set(apiData.map(JSON.stringify))).map(JSON.parse);
+            rand = Math.floor(Math.random() * uniqueArray.length);
+            if (paramKey!="Studious"){
+              moodMoviePath = uniqueArray[rand].poster_path;
+              moodMovieName = uniqueArray[rand].original_title;
+              console.log(apiData);
+            }
+            else{
+              moodMoviePath = "";
+              moodMovieName = "";
+              const showAlert = () =>
+                Alert.alert(
+                  'GET BACK TO WORK!',
+                  "Go study.",
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                  ],
+                  {
+                    cancelable: true
+                  });
+              showAlert();
+
+            }
+     
+            //console.log(moodMovieName, moodMoviePath);
+          navigation.navigate('Movie Page', {paramKey: moodMoviePath})
+        }
         }
         color="#841584"
       />
@@ -451,11 +498,22 @@ const styles2 = StyleSheet.create({
   },
 });
 
+
 const MovieScreen = ({route, navigation}) => {
   const {paramKey} = route.params;
+  //const {paramKey2} = route.paramKey2; 
+ // const {paramKey2} = route2.params;
   return(
       <>
-      {ifElse(paramKey)}
+      
+      
+       <View style={{flex: 1, marginLeft: 25, marginRight: 25, marginBottom: 185, marginTop: 150}}>
+        <WebView
+        source = {{uri: 'https://image.tmdb.org/t/p/w500/'+paramKey}}
+        />
+  </View> 
+      
       </>
+      
   );
 };

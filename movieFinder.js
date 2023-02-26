@@ -77,7 +77,7 @@ const discoverMovie = async (genreObj) => {
     const response = await fetch(url);
     const data = await response.json();
 
-    return data.results.filter(movie => movie.popularity>=1000).filter(movie=>movie.adult===false);
+    return data.results.filter(movie => movie.popularity>=0).filter(movie=>movie.adult===false).filter(movie=>movie.original_language==="en");
   } catch (error) {
     console.error(error);
   }
