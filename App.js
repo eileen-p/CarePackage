@@ -9,7 +9,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack';
 // Used dropdown-select-list from https://www.npmjs.com/package/react-native-dropdown-select-list
 
-import { LiquidLike } from 'react-native-animated-pagination-dots';
+import { LiquidLike, ExpandingDot } from 'react-native-animated-pagination-dots';
 
 
 
@@ -25,6 +25,7 @@ export default function MyStack() {
       close: TransitionSpecs.TransitionIOSSpec,
     },
     cardStyleInterpolators: ({current,next,layouts}) => {
+      console.log(current.progress, next.progress);
       return { 
         cardStyle: {
           transform: [
@@ -99,13 +100,32 @@ const HomeScreen = ({navigation}) => {
       {key:'5', value:'Hype'},
       {key:'6', value:'Studious'},
   ]
+
+  const getTextColor = (selected) => {
+    switch (selected) {
+      case 'Happy':
+        return { color: 'yellow'};
+      case 'Romantic':
+        return { color: 'red'};
+      case 'Sad':
+        return { color: 'blue'};
+      case 'Relaxed':
+        return { color: 'purple'};
+      case 'Hype':
+        return { color: 'green'};
+      case 'Studious':
+        return { color: 'gray'};
+      default:
+        return { color: 'lavender'};
+    }
+  }
   return (
       <View style={styles.header}>
-        <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
+        <Text style={[styles.bigPurple, getTextColor(selected)]}>What mood were you thinkin?</Text>
         <StatusBar style="auto" />
         <SelectList 
           setSelected={(val) => setSelected(val)} 
-          onSelect
+          //onSelect={(selected) => getTextColor(selected)}
           font-family='cochin'
           data={data} 
           boxStyles={{borderRadius: 9}}
@@ -156,33 +176,47 @@ const MoodScreen = ({navigation}) => {
 
 const { width } = Dimensions.get('screen');
 
+// const data = [
+//   {
+//     image:
+//       'https://repository-images.githubusercontent.com/260096455/47f1b200-8b2e-11ea-8fa1-ab106189aeb0',
+//     backgroundColor: '#7bcf6e',
+//   },
+//   {
+//     image:
+//       'https://repository-images.githubusercontent.com/260096455/47f1b200-8b2e-11ea-8fa1-ab106189aeb0',
+//     backgroundColor: '#4654a7',
+//   },
+//   {
+//     image:
+//       'https://repository-images.githubusercontent.com/260096455/47f1b200-8b2e-11ea-8fa1-ab106189aeb0',
+//     backgroundColor: '#7370cf',
+//   },
+//   {
+//     image:
+//       'https://repository-images.githubusercontent.com/260096455/47f1b200-8b2e-11ea-8fa1-ab106189aeb0',
+//     backgroundColor: '#db4747',
+//   },
+// ];
+
 const data = [
   {
-    image:
-      'https://cdn.dribbble.com/users/3281732/screenshots/13661330/media/1d9d3cd01504fa3f5ae5016e5ec3a313.jpg?compress=1&resize=1200x1200',
-    backgroundColor: '#7bcf6e',
+    type: 'image',
+    value: 
+      'https://repository-images.githubusercontent.com/260096455/47f1b200-8b2e-11ea-8fa1-ab106189aeb0',
+           backgroundColor: '#7bcf6e',
   },
   {
-    image:
-      'https://cdn.dribbble.com/users/3281732/screenshots/11192830/media/7690704fa8f0566d572a085637dd1eee.jpg?compress=1&resize=1200x1200',
-    backgroundColor: '#4654a7',
-  },
-  {
-    image:
-      'https://cdn.dribbble.com/users/3281732/screenshots/9165292/media/ccbfbce040e1941972dbc6a378c35e98.jpg?compress=1&resize=1200x1200',
-    backgroundColor: '#7370cf',
-  },
-  {
-    image:
-      'https://cdn.dribbble.com/users/3281732/screenshots/11205211/media/44c854b0a6e381340fbefe276e03e8e4.jpg?compress=1&resize=1200x1200',
+    type: 'webview',
+    value: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M',
     backgroundColor: '#db4747',
-  },
+  }
 ];
 
 const imageW = width * 0.7;
 const imageH = imageW * 1.4;
 
-  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const scrollX = React.useRef(new Animated.Value(0));
   const keyExtractor = React.useCallback((_, index) => index.toString(), []);
   //Current item index of flatlist
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -217,24 +251,87 @@ const imageH = imageW * 1.4;
     setActiveIndex(viewableItems[0].index);
   });
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
-  const renderItem = React.useCallback(({ item }) => {
-    return (
-      <View style={[styles.itemContainer]}>
-        <Animated.Image
-          style={{
-            width: imageW,
-            height: imageH,
-            borderRadius: 20,
-            resizeMode: 'cover',
-          }}
-          source={{ uri: item.image }}
-        />
-      </View>
-    );
-  }, []);
+  const renderItem = (ele) => {
+    console.log(ele.item.type)
+      if (ele.item.type === 'image') {
+      return (
+        <View style={[styles2.itemContainer]}>
+          <Animated.Image
+            style={{
+              width: imageW,
+              height: imageH,
+              borderRadius: 20,
+              resizeMode: 'cover',
+            }}
+            source={{ uri: ele.item.image }}
+          />
+        </View>
+      );
+    } else if (ele.item.type === 'webview') {
+      return (
+        <>
+        <View>
+          <WebView source ={{uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'}}/>
+        </View>
+        <View style={{ flex: 1 }}>
+          <WebView
+            automaticallyAdjustContentInsets={false}
+            source={{ uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' }}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            decelerationRate="normal"
+            startInLoadingState={true}
+            scalesPageToFit={true}
+          />
+        </View>
+        </>
+      );
+    } else {
+      return null;
+    }
+  }
+  // const renderItem = React.useCallback(({ item }) => {
+  //   if (item.type === 'image') {
+  //     return (
+  //       <View style={[styles2.itemContainer]}>
+  //         <Animated.Image
+  //           style={{
+  //             width: imageW,
+  //             height: imageH,
+  //             borderRadius: 20,
+  //             resizeMode: 'cover',
+  //           }}
+  //           source={{ uri: item.image }}
+  //         />
+  //       </View>
+  //     );
+  //   } else if (item.type === 'webview') {
+  //     return (
+  //       <>
+  //       <View>
+  //         <WebView source ={{uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'}}/>
+  //       </View>
+  //       <View style={{ flex: 1 }}>
+  //         <WebView
+  //           automaticallyAdjustContentInsets={false}
+  //           source={{ uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' }}
+  //           javaScriptEnabled={true}
+  //           domStorageEnabled={true}
+  //           decelerationRate="normal"
+  //           startInLoadingState={true}
+  //           scalesPageToFit={true}
+  //         />
+  //       </View>
+  //       </>
+  //     );
+  //   } else {
+  //     return null;
+  //   }
+
+  // }, []);
 
   return (
-    <View style={[styles.container]}>
+    <View style={[styles2.container]}>
       <StatusBar hidden />
       <View style={[StyleSheet.absoluteFillObject]}>
         {data.map((item, index) => {
@@ -243,7 +340,7 @@ const imageH = imageW * 1.4;
             index * width,
             (index + 1) * width,
           ];
-          const colorFade = scrollX.interpolate({
+          const colorFade = scrollX.current.interpolate({
             inputRange,
             outputRange: [0, 1, 0],
           });
@@ -271,23 +368,29 @@ const imageH = imageW * 1.4;
         decelerationRate={'normal'}
         scrollEventThrottle={16}
         onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          [{ nativeEvent: { contentOffset: { x: scrollX.current } } }],
           {
             useNativeDriver: false,
           }
         )}
       />
-      <LiquidLike
-        data={data}
-        scrollX={scrollX}
-        dotSize={18}
-        dotSpacing={6}
-        lineDistance={7}
-        lineHeight={4}
-        inActiveDotOpacity={0.2}
-        activeDotColor={'#fff'}
-        containerStyle={{ flex: 1 }}
-      />
+      <ExpandingDot
+    data={data}
+    expandingDotWidth={30}
+    scrollX={scrollX.current}
+    inActiveDotOpacity={0.6}
+    dotStyle={{
+        width: 10,
+        height: 10,
+        backgroundColor: '#347af0',
+        borderRadius: 5,
+        marginHorizontal: 5
+    }}
+    containerStyle={{
+        top: 30,
+    }}
+/>
+      
       <View style={[styles2.buttonContainer]}>
         <TouchableOpacity
           style={[styles2.button]}
@@ -333,22 +436,22 @@ const styles2 = StyleSheet.create({
   },
 });
 
-  // return (
-  //   <>
-  //   <View>
-  //     <WebView source ={{uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'}}/>
-  //   </View>
-  //   <View style={{ flex: 1 }}>
-  //     <WebView
-  //       automaticallyAdjustContentInsets={false}
-  //       source={{ uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' }}
-  //       javaScriptEnabled={true}
-  //       domStorageEnabled={true}
-  //       decelerationRate="normal"
-  //       startInLoadingState={true}
-  //       scalesPageToFit={true}
-  //     />
-  //   </View>
-  //   </>  
-  // );
+//   return (
+//     <>
+//     <View>
+//       <WebView source ={{uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'}}/>
+//     </View>
+//     <View style={{ flex: 1 }}>
+//       <WebView
+//         automaticallyAdjustContentInsets={false}
+//         source={{ uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' }}
+//         javaScriptEnabled={true}
+//         domStorageEnabled={true}
+//         decelerationRate="normal"
+//         startInLoadingState={true}
+//         scalesPageToFit={true}
+//       />
+//     </View>
+//     </>  
+//   );
 // };
