@@ -178,7 +178,11 @@ const HomeScreen = ({navigation}) => {
             moodMoviePath = uniqueArray[rand].poster_path;
             moodMovieName = uniqueArray[rand].original_title;
             console.log(moodMovieName, moodMoviePath);
-            navigation.navigate('Mood Page', {paramKey: selected})}
+            navigation.navigate('Mood Page', {paramKey: selected})
+            console.log(moodMovieName,moodMoviePath);
+          }
+
+            
           }
           color="#841584"
         />
