@@ -120,6 +120,11 @@ export default function MyStack() {
           component={MoodScreen}
           options = {{headerShown: false}}
         />
+        <Stack.Screen
+          name= "Movie Page"
+          component={MovieScreen}
+          options = {{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
 
@@ -142,17 +147,17 @@ const HomeScreen = ({navigation}) => {
   const getTextColor = (selected) => {
     switch (selected) {
       case 'Happy':
-        return { color: 'yellow'};
+        return { color: 'gold'};
       case 'Romantic':
-        return { color: 'red'};
+        return { color: 'palevioletred'};
       case 'Sad':
-        return { color: 'blue'};
+        return { color: 'lightsteelblue'};
       case 'Relaxed':
-        return { color: 'purple'};
+        return { color: 'slateblue'};
       case 'Hype':
-        return { color: 'green'};
+        return { color: 'lightsalmon'};
       case 'Studious':
-        return { color: 'gray'};
+        return { color: 'darkseagreen'};
       default:
         return { color: 'lavender'};
     }
@@ -411,6 +416,13 @@ const MoodScreen = ({route, navigation}) => {
   return(
       <>
       {ifElse(paramKey)}
+      <Button
+        title="Show my movie!"
+        onPress={() =>
+          navigation.navigate('Movie Page', {paramKey2: paramKey})
+        }
+        color="#841584"
+      />
       </>
   );
 };
@@ -439,22 +451,11 @@ const styles2 = StyleSheet.create({
   },
 });
 
-//   return (
-//     <>
-//     <View>
-//       <WebView source ={{uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'}}/>
-//     </View>
-//     <View style={{ flex: 1 }}>
-//       <WebView
-//         automaticallyAdjustContentInsets={false}
-//         source={{ uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' }}
-//         javaScriptEnabled={true}
-//         domStorageEnabled={true}
-//         decelerationRate="normal"
-//         startInLoadingState={true}
-//         scalesPageToFit={true}
-//       />
-//     </View>
-//     </>  
-//   );
-// };
+const MovieScreen = ({route, navigation}) => {
+  const {paramKey} = route.params;
+  return(
+      <>
+      {ifElse(paramKey)}
+      </>
+  );
+};
