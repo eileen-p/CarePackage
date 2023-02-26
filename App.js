@@ -150,8 +150,9 @@ const HomeScreen = ({navigation}) => {
             const apiData = await discoverMovies(hypeGenres)
             const uniqueArray = Array.from(new Set(apiData.map(JSON.stringify))).map(JSON.parse);
             rand = Math.floor(Math.random() * uniqueArray.length);
-            moodMovie = uniqueArray[rand].poster_path;
-            console.log(moodMovie);
+            moodMoviePath = uniqueArray[rand].poster_path;
+            moodMovieName = uniqueArray[rand]
+            console.log(uniqueArray);
             navigation.navigate('Mood Page', {paramKey: selected})}
           }
 
