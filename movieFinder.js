@@ -87,7 +87,6 @@ const discoverMovie = async (genreObj) => {
 
 export const discoverMovies = async (genreList) => {
   combinedMovies = [];
-  console.log('inside discover<ovies')
   for (let i = 0; i < genreList.length; i++) {
     // genre = genreList[i];
     // genreMovies = await discoverMovie(genre).then(result=>console.log(result));
@@ -112,6 +111,6 @@ export const discoverMovies = async (genreList) => {
   //console.log(String(hypeGenres.map(obj=> (obj.id)).join()));
 
 
-console.log(discoverMovies(hypeGenres));//.then(results=> console.log(results));
+//console.log(discoverMovies(hypeGenres));//.then(results=> console.log(results));
 
 // console.log(await discoverMovie( { id: 12, name: 'Adventure' }))
