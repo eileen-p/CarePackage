@@ -178,8 +178,8 @@ const HomeScreen = ({navigation}) => {
             const uniqueArray = Array.from(new Set(apiData.map(JSON.stringify))).map(JSON.parse);
             rand = Math.floor(Math.random() * uniqueArray.length);
             moodMoviePath = uniqueArray[rand].poster_path;
-            moodMovieName = uniqueArray[rand]
-            console.log(uniqueArray);
+            moodMovieName = uniqueArray[rand].original_title;
+            console.log(moodMovieName, moodMoviePath);
             navigation.navigate('Mood Page', {paramKey: selected})}
           }
 
