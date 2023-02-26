@@ -1,13 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Alert, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, Dimensions, Animated, TouchableOpacity, Alert, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { WebView} from 'react-native-webview';
+//import MoodPage from './moodpage';
+
 import { SelectList } from 'react-native-dropdown-select-list';
 import { CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack';
 import { discoverMovies } from './movieFinder';
 // Used dropdown-select-list from https://www.npmjs.com/package/react-native-dropdown-select-list
+
+import { LiquidLike, ExpandingDot } from 'react-native-animated-pagination-dots';
+
+
+
 
 // movie genres
 const happyGenres = [
@@ -57,6 +64,7 @@ export default function MyStack() {
       close: TransitionSpecs.TransitionIOSSpec,
     },
     cardStyleInterpolators: ({current,next,layouts}) => {
+      console.log(current.progress, next.progress);
       return { 
         cardStyle: {
           transform: [
@@ -130,14 +138,33 @@ const HomeScreen = ({navigation}) => {
       {key:'5', value:'Hype'},
       {key:'6', value:'Studious'},
   ]
+
+  const getTextColor = (selected) => {
+    switch (selected) {
+      case 'Happy':
+        return { color: 'yellow'};
+      case 'Romantic':
+        return { color: 'red'};
+      case 'Sad':
+        return { color: 'blue'};
+      case 'Relaxed':
+        return { color: 'purple'};
+      case 'Hype':
+        return { color: 'green'};
+      case 'Studious':
+        return { color: 'gray'};
+      default:
+        return { color: 'lavender'};
+    }
+  }
   
   return (
       <View style={styles.header}>
-        <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
+        <Text style={[styles.bigPurple, getTextColor(selected)]}>What mood were you thinkin?</Text>
         <StatusBar style="auto" />
         <SelectList 
           setSelected={(val) => setSelected(val)} 
-          // onSelect = {}
+          //// onSelect={(selected) => getTextColor(selected)} = {}
           font-family='cochin'
           data={data} 
           boxStyles={{borderRadius: 9}}
@@ -387,3 +414,47 @@ const MoodScreen = ({route, navigation}) => {
       </>
   );
 };
+
+const styles2 = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  itemContainer: {
+    flex: 1,
+    //width,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+  },
+  button: {
+    margin: 20,
+    fontWeight: '700',
+  },
+  buttonText: {
+    color: '#fff',
+  },
+});
+
+//   return (
+//     <>
+//     <View>
+//       <WebView source ={{uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'}}/>
+//     </View>
+//     <View style={{ flex: 1 }}>
+//       <WebView
+//         automaticallyAdjustContentInsets={false}
+//         source={{ uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' }}
+//         javaScriptEnabled={true}
+//         domStorageEnabled={true}
+//         decelerationRate="normal"
+//         startInLoadingState={true}
+//         scalesPageToFit={true}
+//       />
+//     </View>
+//     </>  
+//   );
+// };
