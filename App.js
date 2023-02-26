@@ -4,11 +4,47 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { WebView} from 'react-native-webview';
-//import MoodPage from './moodpage';
-
 import { SelectList } from 'react-native-dropdown-select-list';
 import { CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack';
+import { discoverMovies } from './movieFinder';
 // Used dropdown-select-list from https://www.npmjs.com/package/react-native-dropdown-select-list
+
+// movie genres
+const happyGenres = [
+  { id: 12, name: 'Adventure' },
+  { id: 35, name: 'Comedy' },
+  { id: 10751, name: 'Family' },
+  { id: 10402, name: 'Music' }
+];
+const romanticGenres = [
+  { id: 10749, name: 'Romance' }
+];
+const sadGenres = [
+  { id: 18, name: 'Drama' },
+  { id: 10752, name: 'War' }
+];
+const relaxedGenres = [
+  { id: 16, name: 'Animation' },
+  { id: 35, name: 'Comedy' },
+  { id: 10751, name: 'Family' },
+  { id: 10402, name: 'Music' },
+  { id: 99, name: 'Documentary' }, // questionable
+  { id: 36, name: 'History' }
+];
+const hypeGenres = [
+  { id: 28, name: 'Action' },
+  { id: 12, name: 'Adventure' },
+  { id: 80, name: 'Crime' },
+  { id: 27, name: 'Horror' },
+  { id: 9648, name: 'Mystery' },
+  { id: 878, name: 'Science Fiction' },
+  { id: 53, name: 'Thriller' },
+  {id: 10752, name: 'War' }
+];
+
+
+
+apikey = "5337a2d15abd632c67adfc31eb638eb5";
 
 const Stack = createNativeStackNavigator();
 
@@ -95,6 +131,7 @@ const HomeScreen = ({navigation}) => {
       {key:'5', value:'Hype'},
       {key:'6', value:'Studious'},
   ]
+  
   return (
       <View style={styles.header}>
         <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
@@ -110,9 +147,17 @@ const HomeScreen = ({navigation}) => {
         <Button
           title="Get my mix!"
           
-          onPress={() =>
-            navigation.navigate('Mood Page')
+          onPress={async () => {
+            const apiData = await discoverMovies(hypeGenres)
+            const uniqueArray = Array.from(new Set(apiData.map(JSON.stringify))).map(JSON.parse);
+            rand = Math.floor(Math.random() * uniqueArray.length);
+            moodMovie = uniqueArray[rand].poster_path;
+            console.log(moodMovie);
+            navigation.navigate('Mood Page')}
           }
+
+            
+          
           color="#841584"
         />
 
