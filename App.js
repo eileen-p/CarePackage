@@ -81,8 +81,6 @@ export default function MyStack() {
   );
 
 }
-//export default function App() {
-
 
 
 const HomeScreen = ({navigation}) => {
@@ -124,11 +122,6 @@ const HomeScreen = ({navigation}) => {
   
 }
 
-
-  //return (
-
-  //);
-//}
 
 const styles = StyleSheet.create({
   container: {
