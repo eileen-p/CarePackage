@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, Dimensions, Animated, TouchableOpacity, Alert, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -10,10 +10,6 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { CardStyleInterpolators, TransitionSpecs } from '@react-navigation/stack';
 import { discoverMovies } from './movieFinder';
 // Used dropdown-select-list from https://www.npmjs.com/package/react-native-dropdown-select-list
-
-import { LiquidLike, ExpandingDot } from 'react-native-animated-pagination-dots';
-
-
 
 
 // movie genres
@@ -104,13 +100,6 @@ export default function MyStack() {
       <Stack.Navigator
       screenOptions={{
         ...customTransition,
-        // gestureEnabled: true,
-        // gestureDirection: 'horizontal',
-        // transitionSpec:{ 
-        //   open: TransitionSpecs,
-        //   close: TransitionSpecs.TransitionIOSSpec,
-        // },
-        // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
       }}
       options = {{...customTransition}}
       >
@@ -182,14 +171,15 @@ const HomeScreen = ({navigation}) => {
         <Button
           title="Get my mix!"
           
-          onPress={() => {
-            
-            
+          onPress={async () => {
+            const apiData = await discoverMovies(hypeGenres)
+            const uniqueArray = Array.from(new Set(apiData.map(JSON.stringify))).map(JSON.parse);
+            rand = Math.floor(Math.random() * uniqueArray.length);
+            moodMoviePath = uniqueArray[rand].poster_path;
+            moodMovieName = uniqueArray[rand].original_title;
+            console.log(moodMovieName, moodMoviePath);
             navigation.navigate('Mood Page', {paramKey: selected})}
           }
-
-            
-          
           color="#841584"
         />
 
@@ -211,7 +201,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 100,
     backgroundColor: '#fff',
-    //alignItems: 'center',
     justifyContent: 'center',
   },
   bigPurple: {
@@ -240,7 +229,7 @@ const happy = () => {
     <View>
       <WebView source ={{uri: playlist}}/>
     </View>
-    <View style={{flex: 1, marginBottom: 200, marginTop: 200}}>
+    <View style={{flex: 1, marginBottom: 100, marginTop: 200}}>
     <WebView
       automaticallyAdjustContentInsets={false}
       source={{ uri: playlist}}
@@ -268,7 +257,7 @@ const romantic = () => {
     <View>
       <WebView source ={{uri: playlist}}/>
     </View>
-    <View style={{flex: 1, marginBottom: 200, marginTop: 200}}>
+    <View style={{flex: 1, marginBottom: 100, marginTop: 200}}>
     <WebView
       automaticallyAdjustContentInsets={false}
       source={{ uri: playlist}}
@@ -296,7 +285,7 @@ const sad = () => {
     <View>
       <WebView source ={{uri: playlist}}/>
     </View>
-    <View style={{flex: 1, marginBottom: 200, marginTop: 200}}>
+    <View style={{flex: 1, marginBottom: 100, marginTop: 200}}>
     <WebView
       automaticallyAdjustContentInsets={false}
       source={{ uri: playlist}}
@@ -324,7 +313,7 @@ const relaxed = () => {
     <View>
       <WebView source ={{uri: playlist}}/>
     </View>
-    <View style={{flex: 1, marginBottom: 200, marginTop: 200}}>
+    <View style={{flex: 1, marginBottom: 100, marginTop: 200}}>
     <WebView
       automaticallyAdjustContentInsets={false}
       source={{ uri: playlist}}
@@ -352,7 +341,7 @@ const hype = () => {
     <View>
       <WebView source ={{uri: playlist}}/>
     </View>
-    <View style={{flex: 1, marginBottom: 200, marginTop: 200}}>
+    <View style={{flex: 1, marginBottom: 100, marginTop: 200}}>
     <WebView
       automaticallyAdjustContentInsets={false}
       source={{ uri: playlist}}
@@ -380,7 +369,7 @@ const studious = () => {
     <View>
       <WebView source ={{uri: playlist}}/>
     </View>
-    <View style={{flex: 1, marginBottom: 200, marginTop: 200}}>
+    <View style={{flex: 1, marginBottom: 100, marginTop: 200}}>
     <WebView
       automaticallyAdjustContentInsets={false}
       source={{ uri: playlist}}
@@ -413,60 +402,13 @@ const ifElse = (selected) => {
 
 const MoodScreen = ({route, navigation}) => {
   const {paramKey} = route.params;
-  return(
+  return (
       <>
       {ifElse(paramKey)}
       <Button
         title="Show my movie!"
-        onPress={async () => {
-            apiData=[]; //= await discoverMovies(hypeGenres)
-              if (paramKey === 'Happy') {apiData = await discoverMovies(happyGenres)}
-              else if(paramKey === 'Sad') {apiData = await discoverMovies(sadGenres)}
-              else if(paramKey === 'Relaxed') {apiData = await discoverMovies(relaxedGenres)}
-              else if(paramKey === 'Romantic') {apiData = await discoverMovies(romanticGenres)}
-              else if(paramKey === 'Hype') {apiData = await discoverMovies(hypeGenres)}
-              else if(paramKey=== "Studious") { apiData =[]}
-              
-             //(paramKey) => {
-              // if (paramKey === 'Happy') {discoverMovies(happyGenres)}
-              // else if(paramKey === 'Sad') {discoverMovies(sadGenres)}
-              // else if(paramKey === 'Relaxed') {discoverMovies(relaxedGenres)}
-              // else if(paramKey === 'Romantic') {discoverMovies(romanticGenres)}
-              // else if(paramKey === 'Hype') {discoverMovies(hypeGenres)}
-              // else if(paramKey === 'Studious') {[]}
-              //discoverMovies(hypeGenres);
-
-            
-            const uniqueArray = Array.from(new Set(apiData.map(JSON.stringify))).map(JSON.parse);
-            rand = Math.floor(Math.random() * uniqueArray.length);
-            if (paramKey!="Studious"){
-              moodMoviePath = uniqueArray[rand].poster_path;
-              moodMovieName = uniqueArray[rand].original_title;
-              console.log(apiData);
-            }
-            else{
-              moodMoviePath = "";
-              moodMovieName = "";
-              const showAlert = () =>
-                Alert.alert(
-                  'GET BACK TO WORK!',
-                  "Go study.",
-                  [
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                  ],
-                  {
-                    cancelable: true
-                  });
-              showAlert();
-
-            }
-     
-            //console.log(moodMovieName, moodMoviePath);
-          navigation.navigate('Movie Page', {paramKey: moodMoviePath})
-        }
+        onPress={() =>
+          navigation.navigate('Movie Page', {paramKey2: paramKey})
         }
         color="#841584"
       />
@@ -475,27 +417,11 @@ const MoodScreen = ({route, navigation}) => {
 };
 
 const styles2 = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  itemContainer: {
-    flex: 1,
-    //width,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-  },
   button: {
-    margin: 20,
+    margin: 50,
     fontWeight: '700',
-  },
-  buttonText: {
-    color: '#fff',
-  },
+    fontSize: 30,
+  }
 });
 
 
