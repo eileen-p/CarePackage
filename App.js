@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Alert, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { WebView} from 'react-native-webview';
 //import MoodPage from './moodpage';
 
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -147,8 +148,22 @@ const styles = StyleSheet.create({
 
 const MoodScreen = ({navigation}) => {
   return (
-    <View style={styles.container}>
-      <Text>HI</Text>
+    <>
+    <View>
+      <WebView source ={{uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'}}/>
     </View>
+    <View style={{ flex: 1 }}>
+    <WebView
+      automaticallyAdjustContentInsets={false}
+      source={{ uri: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M' }}
+      javaScriptEnabled={true}
+      domStorageEnabled={true}
+      decelerationRate="normal"
+      startInLoadingState={true}
+      scalesPageToFit={true}
+    />
+  </View>
+  </>  
+
     );
 };
