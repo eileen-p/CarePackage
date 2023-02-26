@@ -97,26 +97,28 @@ const HomeScreen = ({navigation}) => {
       {key:'6', value:'Studious'},
   ]
   return (
-    <View style={styles.container}>
-      <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
-      <StatusBar style="auto" />
-      <SelectList 
-        setSelected={(val) => setSelected(val)} 
-        font-family='cochin'
-        data={data} 
-        boxStyles={{borderRadius: 9}}
-        save="value"
-      />
-    {/* <Pressable >
-      <Text>I'm pressable!</Text>
-    </Pressable> */}
-      <Button
-        title="Get my mix!"
-        onPress={() =>
-          navigation.navigate('Mood Page')
-        }
-      />
-    </View>
+      <View style={styles.header}>
+        <Text style={styles.bigPurple}>What mood were you thinkin?</Text>
+        <StatusBar style="auto" />
+        <SelectList 
+          setSelected={(val) => setSelected(val)} 
+          onSelect
+          font-family='cochin'
+          data={data} 
+          boxStyles={{borderRadius: 9}}
+          save="value"
+        />
+        <Button
+          title="Get my mix!"
+          
+          onPress={() =>
+            navigation.navigate('Mood Page')
+          }
+          color="#841584"
+        />
+
+      </View>
+
     
   );
   
@@ -131,6 +133,11 @@ const HomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 16,
+  },
+  header: {
+    flex: 1,
     paddingHorizontal: 100,
     backgroundColor: '#fff',
     //alignItems: 'center',
@@ -139,8 +146,9 @@ const styles = StyleSheet.create({
   bigPurple: {
     color: 'lavender',
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 40,
     textAlign: 'center',
+    justifyContent: 'center'
   },
 });
 
